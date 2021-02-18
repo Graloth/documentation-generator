@@ -1,0 +1,13 @@
+{
+  "name": "documentation",
+  "description": "General documentation generator from markdown documents",
+  "author": "Dion Sune Jensen <dion@graloth.com> (https://graloth.com)",
+  "scripts": {
+    "pdf": "node md-to-pdf.js"
+  },
+  "dependencies": {
+    "highlight.js": "^10.6.0",
+    "markdown-pdf": "^10.0.0",
+    "remarkable": "^2.0.1"
+  }
+}
