@@ -14,3 +14,8 @@ Please see demo.md for examples.
 
 ## Recommended extensions for VSCode
  - [Markdown Table Prettifier](https://marketplace.visualstudio.com/items?itemName=darkriszty.markdown-table-prettify): This allows you to write table markdown quickly and afterwards format it to be prettier and easier to read.
+
+## Libraries used
+ - [Markdown PDF](https://github.com/alanshaw/markdown-pdf): Converts the markdown to PDF.
+ - [Remarkable](https://github.com/jonschlinkert/remarkable): add more features to markdown and is used by Markdown PDF library.
+ - [Highlight.js](https://highlightjs.org/): syntax highlighting for code blocks.

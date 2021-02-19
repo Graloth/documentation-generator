@@ -1,9 +1,9 @@
-const markdownPdf = require("markdown-pdf"),
-    fs          = require("fs"),
-    hljs        = require("highlight.js"),
-    path        = require("path");
+import markdownPdf from "markdown-pdf";
+import { readdir, createReadStream, createWriteStream } from "fs";
+import { getLanguage, highlight as _highlight, highlightAuto } from "highlight.js";
+import { join, extname, basename as _basename, dirname } from "path";
 
-const directoryPath = path.join(__dirname, 'pages');
+const directoryPath = join(__dirname, 'pages');
 
 const consoleFormat = {
     reset: "\x1b[0m",
@@ -37,7 +37,7 @@ const consoleFormat = {
     }
 }
 
-fs.readdir(directoryPath, function (err, files) {
+readdir(directoryPath, function (err, files) {
     console.log(consoleFormat.color.text.blue, 'Generating PDF files from Markdown...', consoleFormat.reset);
 
     if (err) {
@@ -45,13 +45,13 @@ fs.readdir(directoryPath, function (err, files) {
     }
 
     files.forEach(function (file) {
-        let fileExt = path.extname(file);
+        let fileExt = extname(file);
         if (fileExt != ".md") {
             return;
         }
         const resultFile = changeExtension(file, '.pdf');
         console.log(consoleFormat.color.text.cyan, '- pages/' + file + ' -> pdf/' + resultFile, consoleFormat.reset);
-        fs.createReadStream("pages/" + file)
+        createReadStream("pages/" + file)
             .pipe(markdownPdf({
                 cssPath: "style/pdf.css",
                 paperBorder: "1cm",
@@ -62,15 +62,15 @@ fs.readdir(directoryPath, function (err, files) {
                     breaks:         false,
                     typographer:    true,
                     highlight:      function (str, lang) {
-                        if (lang && hljs.getLanguage(lang)) {
+                        if (lang && getLanguage(lang)) {
                             try {
-                                return hljs.highlight(lang, str).value;
+                                return _highlight(lang, str).value;
                             }
                             catch (error) {}
                         }
 
                         try {
-                            return hljs.highlightAuto(str).value;
+                            return highlightAuto(str).value;
                         }
                         catch (error) {}
 
@@ -78,13 +78,13 @@ fs.readdir(directoryPath, function (err, files) {
                     }  
                 }
             }))
-            .pipe(fs.createWriteStream("pdf/" + resultFile));
+            .pipe(createWriteStream("pdf/" + resultFile));
     });
     
     console.log(consoleFormat.color.text.green, 'Generation successful!', consoleFormat.reset);
 });
 
 function changeExtension(file, extension) {
-    const basename = path.basename(file, path.extname(file))
-    return path.join(path.dirname(file), basename + extension)
+    const basename = _basename(file, extname(file))
+    return join(dirname(file), basename + extension)
 }
