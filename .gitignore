@@ -117,4 +117,6 @@ dist
 
 # project specific
 pdf/*
+!pdf/.keep
 pages/*
+!pages/.keep

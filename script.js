@@ -45,6 +45,10 @@ fs.readdir(directoryPath, function (err, files) {
     }
 
     files.forEach(function (file) {
+        let fileExt = path.extname(file);
+        if (fileExt != ".md") {
+            return;
+        }
         const resultFile = changeExtension(file, '.pdf');
         console.log(consoleFormat.color.text.cyan, '- pages/' + file + ' -> pdf/' + resultFile, consoleFormat.reset);
         fs.createReadStream("pages/" + file)

@@ -3,7 +3,7 @@
   "description": "General documentation generator from markdown documents",
   "author": "Dion Sune Jensen <dion@graloth.com> (https://graloth.com)",
   "scripts": {
-    "pdf": "node md-to-pdf.js"
+    "generate": "node script.js"
   },
   "dependencies": {
     "highlight.js": "^10.6.0",
